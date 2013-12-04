@@ -75,6 +75,18 @@ public abstract class CSVData {
 		return classification;
 	}
 	
+	// Dette hører kanskje hjemme i en subklasse?
+	public Double distanceTo(CSVData thisGuy){
+		if(thisGuy.size() != this.size()) throw new IllegalArgumentException("These datapoints are not compatible. To calculate distances, they must be of equal size.");
+		
+		Double accumulator = new Double(0.0);
+		for(int i = 0; i < this.size(); ++i){
+			accumulator += Math.pow(this.getAttribute(i) - thisGuy.getAttribute(i), 2.0);			
+		}
+		return Math.sqrt(accumulator);
+		// As per Pythagoras' theorem, but for i-dimensions, not just two.
+		
+	}
 	@Override
 	public boolean equals(Object o){
 		if(!(o instanceof CSVData)){

@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 import no.uib.info381.knn.dataloaders.Adult;
 import no.uib.info381.knn.dataloaders.CSVData;
+import no.uib.info381.knn.dataloaders.CSVDataDistanceComparator;
 
 import au.com.bytecode.opencsv.CSVReader;
 
@@ -49,6 +50,12 @@ public class Main {
 		
 		System.out.printf("Lagde %d objekter.%n", objekter.size());
 
+		System.out.printf("Avstanden mellom de to første er %f%n", objekter.get(0).distanceTo(objekter.get(1)));
+		System.out.printf("Avstanden mellom første og tredje er %f%n", objekter.get(0).distanceTo(objekter.get(2)));
+		System.out.printf("Avstanden mellom første og første er %f%n", objekter.get(0).distanceTo(objekter.get(0)));
+		CSVDataDistanceComparator comp = new CSVDataDistanceComparator(objekter.get(0));
+		int comparison = comp.compare(objekter.get(1), objekter.get(2));
+		System.out.printf("Er avstanden mellom første og andre objekt mindre enn avstanden mellom første og tredje? %s.%n", comparison == 0? "De er like langt unna" : (comparison < 0? "Andre er nærmest" : "Tredje er nærmest"));
 	}
 
 }
