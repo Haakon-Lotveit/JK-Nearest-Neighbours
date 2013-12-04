@@ -4,8 +4,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
+
+import no.uib.info381.knn.dataloaders.Adult;
+import no.uib.info381.knn.dataloaders.CSVData;
 
 import au.com.bytecode.opencsv.CSVReader;
 
@@ -27,17 +31,26 @@ public class Main {
 	 */
 	
 	public static void main(String[] args) throws FileNotFoundException, IOException {
+		int classifierIndex = 7; // Indeksen til feltet som skal brukes som en klasse.
 		System.out.printf("Enter filename: ");
-		FileReader fr = new FileReader(new File(kb.nextLine()));
+		FileReader fr = new FileReader(new File(kb.nextLine().trim()));
 		CSVReader reader = new CSVReader(fr);
 		List<String[]> csvData = reader.readAll();
 		reader.close();
 		fr.close();
 		
-		for(String s : csvData.get(0)){
-			System.out.println(s);
+		System.out.println("CSV-fil lest. Oppretter objekter");
+		
+		List<Adult> objekter = new LinkedList<>();
+		
+		for(String[] rad : csvData){
+			objekter.add(new Adult(rad, classifierIndex));
 		}
+		
+		System.out.printf("Lagde %d objekter.%n", objekter.size());
+
 	}
 
 }
 // /home/haakon/workspace/k-nearest-neighbours/testdata/csv/companies.csv
+// /home/haakon/workspace/k-nearest-neighbours/testdata/csv/adult-removed.csv

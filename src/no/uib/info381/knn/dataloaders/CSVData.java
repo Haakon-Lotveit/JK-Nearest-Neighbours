@@ -7,7 +7,7 @@ package no.uib.info381.knn.dataloaders;
  * @author haakon
  *
  */
-public class CSVData {
+public abstract class CSVData {
 	// Konstruktører
 	
 	/**
@@ -16,7 +16,7 @@ public class CSVData {
 	 * Derfor skriver den ut en feilmelding når den blir kalt, men du får lov til å bruke den.
 	 */
 	protected CSVData(){
-		System.err.printf("[ERROR] Standard constructuor of class %s called.%n", CSVData.class.toString());
+		System.err.printf("[ERROR] Standard constructuor of class %s called.%n", this.getClass().toString());
 	}
 	
 	/**
@@ -24,20 +24,31 @@ public class CSVData {
 	 * TODO: En fabrikkmetode som skalerer ned etter gitte kriterier hadde vært noe. Skal i så fall gjøres etterpå.
 	 * @param csvData
 	 */
-	public CSVData(String[] csvData){
-		this.attributes = new Double[csvData.length];
-		for(int i = 0; i < csvData.length; ++i){
-			
+	public CSVData(String[] csvData, int classificationIndex){
+		this.attributes = new Double[csvData.length - 1];
+		this.classification = csvData[classificationIndex];
+		
+		for(int i = 0; i < classificationIndex; ++i){
+			attributes[i] = Double.parseDouble(csvData[i]);
+		}
+		for(int i = classificationIndex; i < attributes.length; ++i){
+			attributes[i] = Double.parseDouble(csvData[i+1]);
 		}
 	}
 	
-	// Felt
 	
+	// Felt
+		
 	/**
 	 * Denne holder på attributtene til objektet. Alt er tall, så jeg tenkte at flyttall med dobbel presisjon får funke for nå.
 	 */
-	Double[] attributes;
+	private Double[] attributes;
+	/**
+	 * Klassifiseringen av dette objektet.
+	 */
+	private String classification;
 	
+
 	// Metoder
 	
 	/**
@@ -55,4 +66,36 @@ public class CSVData {
 			return attributes[index]; /* Double er immutabel, så dette går fint: Double kan ikke endres etter at du har fått den. */
 		}
 	}
+	
+	public int size() {
+		return attributes.length;
+	}
+	
+	public String classification(){
+		return classification;
+	}
+	
+	@Override
+	public boolean equals(Object o){
+		if(!(o instanceof CSVData)){
+			return false;
+		}
+		CSVData cand = (CSVData) o;
+		if(cand.size() != this.size()){
+			return false;
+		}
+		
+		for(int i = 0; i < cand.size(); ++i){
+			if(this.getAttribute(i) != cand.getAttribute(i)){
+				return false;
+			}
+		}
+		return true;
+	}
+	
+
+	@Override
+	public abstract String toString();
+	@Override
+	public abstract int hashCode();
 }
