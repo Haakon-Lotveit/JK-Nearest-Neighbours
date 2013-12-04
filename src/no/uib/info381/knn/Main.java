@@ -24,7 +24,7 @@ public class Main {
 
 	private static Scanner kb = new Scanner(System.in);
 	/**
-	 * @param args Not read, next iteration, we might let people do stuff like --file "~/datas/csvs/somecsvfile.csv" or something.
+	 * @param args Not read, next iteration, we might let people do stuff like --file "~/datas/csvs/somecsvfile.csv" --classify 45 23 543 123 UNKNOWN or something.
 	 * 
 	 * Yeah, I'm not even going to TRY to do error-handling at this point.
 	 * @throws IOException 
@@ -42,20 +42,28 @@ public class Main {
 		
 		System.out.println("CSV-fil lest. Oppretter objekter");
 		
-		List<Adult> objekter = new LinkedList<>();
+		List<CSVData> objekter = new LinkedList<>();
 		
 		for(String[] rad : csvData){
 			objekter.add(new Adult(rad, classifierIndex));
 		}
 		
 		System.out.printf("Lagde %d objekter.%n", objekter.size());
-
-		System.out.printf("Avstanden mellom de to første er %f%n", objekter.get(0).distanceTo(objekter.get(1)));
-		System.out.printf("Avstanden mellom første og tredje er %f%n", objekter.get(0).distanceTo(objekter.get(2)));
-		System.out.printf("Avstanden mellom første og første er %f%n", objekter.get(0).distanceTo(objekter.get(0)));
-		CSVDataDistanceComparator comp = new CSVDataDistanceComparator(objekter.get(0));
-		int comparison = comp.compare(objekter.get(1), objekter.get(2));
-		System.out.printf("Er avstanden mellom første og andre objekt mindre enn avstanden mellom første og tredje? %s.%n", comparison == 0? "De er like langt unna" : (comparison < 0? "Andre er nærmest" : "Tredje er nærmest"));
+		
+		
+		/* Diverse testemetoder */
+//		System.out.printf("Avstanden mellom de to første er %f%n", objekter.get(0).distanceTo(objekter.get(1)));
+//		System.out.printf("Avstanden mellom første og tredje er %f%n", objekter.get(0).distanceTo(objekter.get(2)));
+//		System.out.printf("Avstanden mellom første og første er %f%n", objekter.get(0).distanceTo(objekter.get(0)));
+//		CSVDataDistanceComparator comp = new CSVDataDistanceComparator(objekter.get(0));
+//		int comparison = comp.compare(objekter.get(1), objekter.get(2));
+//		System.out.printf("Er avstanden mellom første og andre objekt mindre enn avstanden mellom første og tredje? %s.%n", comparison == 0? "De er like langt unna" : (comparison < 0? "Andre er nærmest" : "Tredje er nærmest"));
+		
+		System.out.println("Trying to classify test subject 1");
+		CSVData testSubject = objekter.remove(0);
+		KNN testData = new KNN(objekter);
+		String guess = testData.classify(testSubject, 5);
+		System.out.printf("Actual classification: %s, Guesstimate by KNN: %s%n", testSubject.classification(), guess);
 	}
 
 }
