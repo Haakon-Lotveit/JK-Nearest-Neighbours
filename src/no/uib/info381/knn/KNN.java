@@ -11,7 +11,7 @@ import no.uib.info381.knn.dataloaders.CSVDataDistanceComparator;
  * Denne funker hvis og bare hvis det ikke kan være noe uavgjort.
  * Så dersom det bare er to klasser å velge mellom og vi velger et oddetall, vil alt være greit.
  * Ellers må vi begynne med å gjøre ting mer ordentlig, og begynne med at nærmeste teller ekstra eller noe.
- * @author haakon
+ * @author Haakon Løtveit
  *
  */
 public class KNN {

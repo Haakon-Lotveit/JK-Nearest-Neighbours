@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 /**
  * A simple convenience class that lets the k-nn vote for the nearest neighbour without us having to do manual hashmap lookups and all that stuff.
- * @author haakon
+ * @author Haakon Løtveit
  */
 public class Voter {
 	HashMap<String, Integer> poll;
