@@ -12,6 +12,8 @@ import no.uib.info381.knn.dataloaders.Adult;
 import no.uib.info381.knn.dataloaders.CSVData;
 import no.uib.info381.knn.dataloaders.CSVDataDistanceComparator;
 import no.uib.info381.knn.userinterface.cli.CommandLine;
+import no.uib.info381.knn.convenience.Table;
+import no.uib.info381.knn.convenience.TableHelper;
 
 import au.com.bytecode.opencsv.CSVReader;
 
@@ -35,6 +37,11 @@ public class Main {
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		CommandLine userInterface = new CommandLine();
 		userInterface.start();
+		
+		// khoa test:
+		/*
+		Table dataset = TableHelper.ReadTableFromCSV(kb.nextLine().trim());
+		dataset.print(13,300);*/
 
 		// HELE DENNE GREIEN ER BARE TESTING FRA TIDLIGERE. DET SKAL OVER I JUNIT.
 //		int classifierIndex = 7; // Indeksen til feltet som skal brukes som en klasse.
