@@ -21,7 +21,7 @@ public class Adult extends CSVData{
 	
 	@Override
 	public String toString() {
-		/* Dette er CLOS formatet for objekter. Hvis du heller vil gjøre det annerledes, er ikke det noe stress. - Haakon */
+		/* Dette er ca CLOS formatet for objekter. Hvis du heller vil gjøre det annerledes, er ikke det noe stress. - Haakon */
 		return String.format(
 				"(:class no.uib.info381.knn.dataloaders :classified-as %s :age %f :sampling-weight %f :education-years %f :sex %f :capital-gain %f :capital-loss %f :hours-per-week %f)",
 				this.classification(), this.getAge(), this.getSamplingWeight(), this.getEducationYears(), this.getSex(), this.getCapitalGain(), this.getCapitalLoss(), this.getHoursPerWeek());

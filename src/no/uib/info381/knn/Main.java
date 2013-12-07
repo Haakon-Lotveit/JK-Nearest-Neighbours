@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import no.uib.info381.knn.userinterface.cli.CommandLine;
+import no.uib.info381.knn.convenience.Table;
+import no.uib.info381.knn.convenience.TableHelper;
 
 /**
  * Entry point for the application.
@@ -24,6 +26,11 @@ public class Main {
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		CommandLine userInterface = new CommandLine();
 		userInterface.start();
+		
+		// khoa test:
+		/*
+		Table dataset = TableHelper.ReadTableFromCSV(kb.nextLine().trim());
+		dataset.print(13,300);*/
 
 		// HELE DENNE GREIEN ER BARE TESTING FRA TIDLIGERE. DET SKAL OVER I JUNIT.
 //		int classifierIndex = 7; // Indeksen til feltet som skal brukes som en klasse.

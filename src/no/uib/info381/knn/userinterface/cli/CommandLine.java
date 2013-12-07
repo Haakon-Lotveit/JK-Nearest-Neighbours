@@ -249,12 +249,13 @@ public class CommandLine {
 			@Override
 			public void execute(String[] args, CommandLine env) {
 				System.out.println("Legal commands are:");
-				System.out.println(":help – prints this helpful message");
-				System.out.println(":exit – exits the program");
+				int width = 16;
+				System.out.printf("%-"+width+"s - %s\n",":help","prints this helpful message");
+				System.out.printf("%-"+width+"s - %S\n",":exit","exits the program");
+				System.out.printf("%-"+width+"s - %s\n",":load","loads a csv-file to the dataset. If it's not compatible with the data already saved, the program will crash. (NOT DONE YET)");
+				System.out.printf("%-"+width+"s - %s\n",":save","unimplemented. would save your current dataset to disk.");
 				System.out.println(":script [filename] – runs the script found in filename.");
 				System.out.println(":peek – Shows you the first datapoint in the dataset");
-				System.out.println(":load [filename] [classification index] – loads a csv-file to the dataset. If it's not compatible with the data already saved, the program will crash. (NOT DONE YET)");
-				System.out.println(":save –––––––––––– unimplemented. would save your current dataset to disk.");
 				System.out.println(":drop – deletes the currently loaded dataset.");
 				System.out.println(":classify-file [filename] [classification index] [number of voters] [-add|-print|-replace] – ");
 				System.out.println("               Reads a file and classifies every single row. Then either adds them to the set, prints them or replaces the current set.");
