@@ -16,13 +16,19 @@ import no.uib.info381.knn.dataloaders.CSVDataDistanceComparator;
  */
 public class KNN {
 	private List<CSVData> dataset;
+	private Integer[] allowableIndexes;
 
 	public KNN(List<CSVData> dataset){
-		this.dataset = dataset;		
+		this.dataset = dataset;
+		Integer numIndexes = dataset.get(0).size();
+		allowableIndexes = new Integer[numIndexes];
+		for(int i = 0; i < numIndexes; ++i){
+			allowableIndexes[i] = i;
+		}
 	}
 	
 	public String classify(CSVData unknown, int k){
-		CSVDataDistanceComparator comparator = new CSVDataDistanceComparator(unknown);
+		CSVDataDistanceComparator comparator = new CSVDataDistanceComparator(unknown, allowableIndexes);
 		Voter poll = new Voter();
 
 		PriorityQueue<CSVData> heap = new PriorityQueue<>(dataset.size(), comparator);
@@ -38,5 +44,9 @@ public class KNN {
 	
 	public void addToDataset(CSVData newbie){
 		this.dataset.add(newbie);
+	}
+	
+	public void useIndexes(Integer[] allowable){
+		this.allowableIndexes = allowable;
 	}
 }

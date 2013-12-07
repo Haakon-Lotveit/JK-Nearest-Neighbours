@@ -78,7 +78,17 @@ public class CSVData {
 		return classification;
 	}
 	
-	// Dette hører kanskje hjemme i en subklasse?
+
+	public Double distanceTo(CSVData thisGuy, Integer[] onTheseIndexes){
+		if(thisGuy.size() != this.size()) throw new IllegalArgumentException("These datapoints are not compatible. To calculate distances, they must be of equal size.");
+		
+		Double accumulator = new Double(0.0);
+		for(Integer index : onTheseIndexes){
+			accumulator += Math.pow(this.getAttribute(index) - thisGuy.getAttribute(index), 2.0);
+		}
+		
+		return Math.sqrt(accumulator);
+	}
 	public Double distanceTo(CSVData thisGuy){
 		if(thisGuy.size() != this.size()) throw new IllegalArgumentException("These datapoints are not compatible. To calculate distances, they must be of equal size.");
 		
@@ -137,5 +147,7 @@ public class CSVData {
 		
 		return created;
 	}
+	
+
 }
 

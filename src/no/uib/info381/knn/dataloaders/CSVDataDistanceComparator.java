@@ -4,8 +4,11 @@ import java.util.Comparator;
 
 public class CSVDataDistanceComparator implements Comparator<CSVData> {
 	CSVData comparisonBase;
-	public CSVDataDistanceComparator(CSVData compareBasedOnMe){
+	Integer[] allowableIndexes;
+	
+	public CSVDataDistanceComparator(CSVData compareBasedOnMe, Integer[] allowableIndexes){
 		this.comparisonBase = compareBasedOnMe;
+		this.allowableIndexes = allowableIndexes;
 	}
 	
 	/**
@@ -15,8 +18,8 @@ public class CSVDataDistanceComparator implements Comparator<CSVData> {
 	 */
 	@Override
 	public int compare(CSVData o1, CSVData o2) {
-		double a = comparisonBase.distanceTo(o1);
-		double b = comparisonBase.distanceTo(o2);		
+		double a = comparisonBase.distanceTo(o1, allowableIndexes);
+		double b = comparisonBase.distanceTo(o2, allowableIndexes);		
 		return (int) Math.round(a - b);
 	}
 
