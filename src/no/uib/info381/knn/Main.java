@@ -1,19 +1,9 @@
 package no.uib.info381.knn;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Scanner;
 
-import no.uib.info381.knn.dataloaders.Adult;
-import no.uib.info381.knn.dataloaders.CSVData;
-import no.uib.info381.knn.dataloaders.CSVDataDistanceComparator;
 import no.uib.info381.knn.userinterface.cli.CommandLine;
-
-import au.com.bytecode.opencsv.CSVReader;
 
 /**
  * Entry point for the application.
@@ -23,7 +13,6 @@ import au.com.bytecode.opencsv.CSVReader;
  */
 public class Main {
 
-	private static Scanner kb = new Scanner(System.in);
 	/**
 	 * @param args Not read, next iteration, we might let people do stuff like --file "~/datas/csvs/somecsvfile.csv" --classify 45 23 543 123 UNKNOWN or something.
 	 * 
@@ -74,4 +63,5 @@ public class Main {
 
 }
 // /home/haakon/workspace/k-nearest-neighbours/testdata/csv/companies.csv
-// /home/haakon/workspace/k-nearest-neighbours/testdata/csv/adult-removed.csv
+// :load /home/haakon/workspace/k-nearest-neighbours/testdata/csv/adult-removed.csv 7
+// :classify 11 39 77516 13 1 2174 0 40 -print

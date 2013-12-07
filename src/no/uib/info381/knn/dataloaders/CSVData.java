@@ -1,5 +1,8 @@
 package no.uib.info381.knn.dataloaders;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Denne klassen er en basisklasse for å lage objekter av rader fra CSVfiler.
  * Den er ment til å være en basisklasse andre klasser kan arve fra.
@@ -7,7 +10,7 @@ package no.uib.info381.knn.dataloaders;
  * @author haakon
  *
  */
-public abstract class CSVData {
+public class CSVData {
 	// Konstruktører
 	
 	/**
@@ -84,8 +87,6 @@ public abstract class CSVData {
 			accumulator += Math.pow(this.getAttribute(i) - thisGuy.getAttribute(i), 2.0);			
 		}
 		return Math.sqrt(accumulator);
-		// As per Pythagoras' theorem, but for i-dimensions, not just two.
-		
 	}
 	@Override
 	public boolean equals(Object o){
@@ -107,7 +108,34 @@ public abstract class CSVData {
 	
 
 	@Override
-	public abstract String toString();
+	public String toString(){
+		return String.format("CSVData, classified as %s, %d number of fields.", classification(), size());
+	}
+	
 	@Override
-	public abstract int hashCode();
+	public int hashCode() {
+		Integer accumulator = 0;
+		for(int i = 0; i < attributes.length; ++i){
+			accumulator += attributes[i].hashCode() << i;
+		}
+		return new Integer(accumulator * 31).hashCode();
+	}
+	
+	// Factory methods
+	/**
+	 * This is a simple factory that creates a bunch of objects from
+	 * @param csvRows
+	 * @param classificationIndex
+	 * @return
+	 */
+	public static List<CSVData> createFromList(List<String[]> csvRows, int classificationIndex){
+		List<CSVData> created = new LinkedList<>();
+		
+		for(String[] row : csvRows){
+			created.add(new CSVData(row, classificationIndex));
+		}
+		
+		return created;
+	}
 }
+

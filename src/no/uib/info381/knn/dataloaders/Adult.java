@@ -8,6 +8,7 @@ public class Adult extends CSVData{
 	/**
 	 * Standardkonstruktøren står tom, men skal uansett ikke brukes til noe, så det går vel greit. :)
 	 */
+	@SuppressWarnings("unused")
 	private Adult(){
 		super();		
 	}
