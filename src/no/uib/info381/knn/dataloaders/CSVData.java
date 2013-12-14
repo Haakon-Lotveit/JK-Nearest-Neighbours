@@ -119,7 +119,13 @@ public class CSVData {
 
 	@Override
 	public String toString(){
-		return String.format("CSVData, classified as %s, %d number of fields.", classification(), size());
+		StringBuilder sb = new StringBuilder();
+		for(int i = 0; i < this.size(); ++i){
+			sb.append(this.getAttribute(i)).append(',');
+		}
+		sb.append(this.classification());
+		
+		return sb.toString();
 	}
 	
 	@Override
