@@ -101,4 +101,8 @@ public class CSVNormaliser {
 		}		
 		return sb.toString();
 	}
+	
+	public List<String> getList(){
+		return csvList;
+	}
 }
