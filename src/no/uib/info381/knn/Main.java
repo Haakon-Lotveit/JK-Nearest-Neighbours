@@ -29,6 +29,7 @@ public class Main {
 		
 		// khoa test:
 		/*
+		Scanner kb = new Scanner(System.in);
 		Table dataset = TableHelper.ReadTableFromCSV(kb.nextLine().trim());
 		dataset.print(13,300);*/
 
