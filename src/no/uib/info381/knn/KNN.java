@@ -51,8 +51,9 @@ public class KNN {
 		return poll.getLeadingCandidate();
 		
 	}
+
 	
-	/***
+	/**
 	 * shortcut method of the method above
 	 * @param unknown
 	 * @param k
@@ -61,6 +62,7 @@ public class KNN {
 	public String classify(CSVData unknown, int k) {
 		return this.classify(unknown, k, null);
 	}
+	
 	
 	public void addToDataset(CSVData newbie){
 		this.dataset.add(newbie);

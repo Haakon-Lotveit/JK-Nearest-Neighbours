@@ -1,8 +1,10 @@
 package no.uib.info381.knn;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import no.uib.info381.knn.convenience.CSVNormaliser;
 import no.uib.info381.knn.userinterface.cli.CommandLine;
 import no.uib.info381.knn.visualizer.*;
 
@@ -25,6 +27,10 @@ public class Main {
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		CommandLine userInterface = new CommandLine();
 		//userInterface.start(); 
+		CSVNormaliser norm = new CSVNormaliser(new File("testdata/csv/missingdata.csv"), 1);
+		System.out.println(norm);
+		System.out.println(norm.fillBlanks());
+		System.out.println(norm.normalize());
 		
 //khoa test:
 		/*
