@@ -27,7 +27,14 @@ public class KNN {
 		}
 	}
 	
-	public String classify(CSVData unknown, int k){
+	/***
+	 * classification method used to classify a single object
+	 * @param unknown - the object to be classified
+	 * @param k - how many neighbors
+	 * @param neighbors - this is actually an output, so feed in an empty list thanks (used for visualizing neighbors)
+	 * @return
+	 */
+	public String classify(CSVData unknown, int k, List<CSVData> neighbors){
 		CSVDataDistanceComparator comparator = new CSVDataDistanceComparator(unknown, allowableIndexes);
 		Voter poll = new Voter();
 
@@ -35,11 +42,24 @@ public class KNN {
 		heap.addAll(dataset);
 		
 		for(int i = 0; i < k; ++i){
-			poll.voteFor(heap.remove().classification());
+			CSVData neighbor = heap.remove(); 
+			if (neighbors!=null)
+				neighbors.add(neighbor);
+			poll.voteFor(neighbor.classification());
 		}
 		
 		return poll.getLeadingCandidate();
 		
+	}
+	
+	/***
+	 * shortcut method of the method above
+	 * @param unknown
+	 * @param k
+	 * @return
+	 */
+	public String classify(CSVData unknown, int k) {
+		return this.classify(unknown, k, null);
 	}
 	
 	public void addToDataset(CSVData newbie){

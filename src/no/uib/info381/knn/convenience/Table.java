@@ -206,7 +206,7 @@ public class Table {
 		this.nColumns += newAttributes;
 		
 		int i=0;
-		for (i=0;i<table.RowSize();i++)
+		for (;i<table.RowSize();i++)
 		{
 			if (i<=this.nRows-1)
 			{
@@ -297,11 +297,11 @@ public class Table {
 	{
 		int attrIndex = -1;
 		// find attribute index
-		for (int i=0; i<AttributeNames.size();i++) 
+		for (int i=0; i<AttributeNames.size();i++)
 		{
 			// the search is case insensitive
 			if (AttributeNames.get(i).toLowerCase().equals(attribute.toLowerCase()))
-				attrIndex = i;
+				return i;
 		}
 		return attrIndex;
 	}

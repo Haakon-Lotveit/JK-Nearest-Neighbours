@@ -4,8 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import no.uib.info381.knn.userinterface.cli.CommandLine;
-import no.uib.info381.knn.convenience.Table;
-import no.uib.info381.knn.convenience.TableHelper;
+import no.uib.info381.knn.visualizer.*;
 
 /**
  * Entry point for the application.
@@ -25,48 +24,15 @@ public class Main {
 	
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		CommandLine userInterface = new CommandLine();
-		userInterface.start();
+		//userInterface.start(); 
 		
-		// khoa test:
+//khoa test:
 		/*
 		Scanner kb = new Scanner(System.in);
 		Table dataset = TableHelper.ReadTableFromCSV(kb.nextLine().trim());
 		dataset.print(13,300);*/
-
 		// HELE DENNE GREIEN ER BARE TESTING FRA TIDLIGERE. DET SKAL OVER I JUNIT.
-//		int classifierIndex = 7; // Indeksen til feltet som skal brukes som en klasse.
-//		System.out.printf("Enter filename: ");
-//		FileReader fr = new FileReader(new File(kb.nextLine().trim()));
-//		CSVReader reader = new CSVReader(fr);
-//		List<String[]> csvData = reader.readAll();
-//		reader.close();
-//		fr.close();
-//		
-//		System.out.println("CSV-fil lest. Oppretter objekter");
-//		
-//		List<CSVData> objekter = new LinkedList<>();
-//		
-//		for(String[] rad : csvData){
-//			objekter.add(new Adult(rad, classifierIndex));
-//		}
-//		
-//		System.out.printf("Lagde %d objekter.%n", objekter.size());
-//		
-		
-		/* Diverse testemetoder */
-//		System.out.printf("Avstanden mellom de to første er %f%n", objekter.get(0).distanceTo(objekter.get(1)));
-//		System.out.printf("Avstanden mellom første og tredje er %f%n", objekter.get(0).distanceTo(objekter.get(2)));
-//		System.out.printf("Avstanden mellom første og første er %f%n", objekter.get(0).distanceTo(objekter.get(0)));
-//		CSVDataDistanceComparator comp = new CSVDataDistanceComparator(objekter.get(0));
-//		int comparison = comp.compare(objekter.get(1), objekter.get(2));
-//		System.out.printf("Er avstanden mellom første og andre objekt mindre enn avstanden mellom første og tredje? %s.%n", comparison == 0? "De er like langt unna" : (comparison < 0? "Andre er nærmest" : "Tredje er nærmest"));
-		
-//		System.out.println("Trying to classify test subject 1");
-//		CSVData testSubject = objekter.remove(0);
-//		KNN testData = new KNN(objekter);
-//		String guess = testData.classify(testSubject, 5);
-//		System.out.printf("Actual classification: %s, Guesstimate by KNN: %s%n", testSubject.classification(), guess);
-//		
+
 	}
 
 }
