@@ -65,6 +65,9 @@ public class CSVNormaliser {
 	public String[] normaliseRow(String[] row){
 		String[] newRow = Arrays.copyOf(row, row.length);
 		for(int i = 0; i < newRow.length; ++i){
+			if(i == classificationIndex){
+				continue; // Skip the classification index, obviously
+			}
 			row[i] = String.valueOf((Double.parseDouble(row[i]) - lowestValues[i])/(highestValues[i] - lowestValues[i]));
 		}
 		return newRow;
@@ -77,9 +80,11 @@ public class CSVNormaliser {
 		}
 		
 		int numAttributes = csvList.get(0).length;
-		
+		lowestValues = new double[numAttributes];
+		highestValues = new double[numAttributes];
 		for(int attribute = 0; attribute < numAttributes; ++attribute){
 			if(attribute == classificationIndex){
+				lowestValues[attribute] = highestValues[attribute] = Double.NaN;
 				continue; // skip the classification. It's not a number so shall not be messed with.
 			}
 			double largest = Double.MIN_VALUE;
@@ -94,7 +99,9 @@ public class CSVNormaliser {
 				}
 			}
 			
-			// Nå som vi har største og minste, kan vi bruke formelen normalisert(n) = (n - minste)/(største - minste)
+			// Nå som vi har største og minste, oppdaterer vi tabellen vår, og så kan vi bruke formelen normalisert(n) = (n - minste)/(største - minste)
+			lowestValues[attribute] = lowest;
+			highestValues[attribute] = largest;
 			for(String[] row : csvList){
 				row[attribute] = String.valueOf((Double.parseDouble(row[attribute]) - lowest)/(largest - lowest));
 			}

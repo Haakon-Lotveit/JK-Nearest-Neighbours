@@ -28,19 +28,31 @@ public class CommandLine {
 	public CommandLine(){
 		dataset = new ArrayList<>();
 		lookup = new HashMap<>();
-		lookup.put(":skript", new CLICommand() {
+		
+		lookup.put(":script", new CLICommand() {
 			
 			@Override
 			public void execute(String[] args, CommandLine env) {
+				if(args.length != 1){
+					System.out.println("Invalid number of arguments. One and only one shall suffice");
+				}
+				File f = new File(args[0]);
+				System.out.printf("Executing script located at: %s%n.", f.getAbsolutePath());				
+				if(!f.exists()){
+					System.out.println("File not found.");
+					return;
+				}
+				if(!f.canRead()){
+					System.out.println("Does not have read permissions to file.");
+					return;
+				}
 				try {
-					// Gidder ikke lukke denne. Men det er et teoretisk problem hvis en bruker mer enn noen få skriptfiler.
-					@SuppressWarnings("resource")
-					Scanner reader = new Scanner(new File(args[0])).useDelimiter("\\Z");
-					env.runScript(reader.next().split("\n"));
-					reader.close();
+					env.runScript(f);
+					System.out.println("Skript successfully executed.");
 				} catch (FileNotFoundException e) {
-					System.out.printf("File \"%s\" not found.%n", args[0]);
-				}				
+					e.printStackTrace();
+					System.out.println("File not found.");
+				}
 			}
 		});
 		
@@ -69,7 +81,7 @@ public class CommandLine {
 					System.out.printf("%s is not a valid integer.%n", args[0]);
 					return;
 				}
-				System.out.printf("Classifying dataset based on %d votes,%n", numVotes);
+				System.out.printf("Classifying data based on %d votes,%n", numVotes);
 				
 				/* Skal vi skrive ut eller legge til? */
 				boolean add = false;
@@ -93,7 +105,7 @@ public class CommandLine {
 				}
 				
 				KNN knn = env.getKNN();
-				CSVData data = new CSVData(row, env.getClassificationIndex());
+				CSVData data = new CSVData(knn.getCSVNormaliser().normaliseRow(row), env.getClassificationIndex());
 				String classification = knn.classify(data, env.getClassificationIndex());
 				
 				if(print){
@@ -276,7 +288,7 @@ public class CommandLine {
 		for(String[] row : norman.fillBlanks().normalize().getList()){
 			csvList.add(new CSVData(row, classificationIndex));
 		}
-		return new KNN(csvList);
+		return new KNN(csvList, norman);
 	}
 	/**
 	 * Kjører et skript fra et array av strenger, slik at vi slipper å kopiere inn fire millioner linjer for å gjøre ting.
@@ -285,10 +297,10 @@ public class CommandLine {
 	public void runScript(String[] script){
 		Scanner parser = null;
 		for(String line : script){
-			/* Lar oss ha kommentarer og tomme linjer. */
+			/* Lar oss ha kommentarer (men ikke inline) og tomme linjer. */
 			if(line.startsWith("#") || line.length() == 0){
 				continue;
-			}
+			}		
 			parser = new Scanner(line);
 			String command = parser.next();
 			String[] args = parser.nextLine().trim().split(" ");

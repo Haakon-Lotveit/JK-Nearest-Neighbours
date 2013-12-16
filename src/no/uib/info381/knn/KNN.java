@@ -3,6 +3,7 @@ package no.uib.info381.knn;
 import java.util.List;
 import java.util.PriorityQueue;
 
+import no.uib.info381.knn.convenience.CSVNormaliser;
 import no.uib.info381.knn.convenience.Voter;
 import no.uib.info381.knn.dataloaders.CSVData;
 import no.uib.info381.knn.dataloaders.CSVDataDistanceComparator;
@@ -17,7 +18,8 @@ import no.uib.info381.knn.dataloaders.CSVDataDistanceComparator;
 public class KNN {
 	private List<CSVData> dataset;
 	private Integer[] allowableIndexes;
-
+	private CSVNormaliser normalizer;
+	
 	public KNN(List<CSVData> dataset){
 		this.dataset = dataset;
 		Integer numIndexes = dataset.get(0).size();
@@ -25,6 +27,21 @@ public class KNN {
 		for(int i = 0; i < numIndexes; ++i){
 			allowableIndexes[i] = i;
 		}
+		this.normalizer = null;
+	}
+	
+	public KNN(List<CSVData> dataset, CSVNormaliser norman) {
+		this.dataset = dataset;
+		Integer numIndexes = dataset.get(0).size();
+		allowableIndexes = new Integer[numIndexes];
+		for(int i = 0; i < numIndexes; ++i){
+			allowableIndexes[i] = i;
+		}
+		this.normalizer = norman;
+	}
+
+	public CSVNormaliser getCSVNormaliser(){
+		return this.normalizer;
 	}
 	
 	/***

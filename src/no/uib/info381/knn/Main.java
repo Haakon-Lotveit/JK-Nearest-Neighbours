@@ -26,8 +26,8 @@ public class Main {
 	
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		CommandLine userInterface = new CommandLine();
-		userInterface.runScript(new File("testdata/script/simplestscript"));
-		// userInterface.start(); 
+//		userInterface.runScript(new File("testdata/script/simplestscript"));
+		userInterface.start(); 
 		
 		
 //khoa test:
