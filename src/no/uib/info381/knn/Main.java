@@ -26,11 +26,9 @@ public class Main {
 	
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		CommandLine userInterface = new CommandLine();
-		//userInterface.start(); 
-		CSVNormaliser norm = new CSVNormaliser(new File("testdata/csv/missingdata.csv"), 1);
-		System.out.println(norm);
-		System.out.println(norm.fillBlanks());
-		System.out.println(norm.normalize());
+		userInterface.runScript(new File("testdata/script/simplestscript"));
+		// userInterface.start(); 
+		
 		
 //khoa test:
 		/*

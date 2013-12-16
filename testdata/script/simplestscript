@@ -1,0 +1,4 @@
+:load testdata/csv/missingdata.csv
+:classification-index 1
+:peek -1
+:classify 3 4.0 -print

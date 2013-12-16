@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import au.com.bytecode.opencsv.CSVReader;
@@ -11,13 +13,20 @@ import au.com.bytecode.opencsv.CSVReader;
 public class CSVNormaliser {
 	List<String[]> csvList;
 	private int classificationIndex;
-	
+	double[] lowestValues;
+	double[] highestValues;
 	public CSVNormaliser(File csvfile, int classificationIndex) throws IOException{
 		this.classificationIndex = classificationIndex;
 		CSVReader reader = new CSVReader(new FileReader(csvfile));
 		csvList = reader.readAll();
+		reader.close();
 	}
 	
+	public CSVNormaliser(ArrayList<String[]> dataset, int classificationIndex) {
+		this.classificationIndex = classificationIndex;
+		this.csvList = dataset;
+	}
+
 	/**
 	 * Loops over all attributes.
 	 * Loop runs in two stages. First stage calculates an average value, second stage inserts it into blank value-fields.
@@ -51,6 +60,14 @@ public class CSVNormaliser {
 			}
 		}
 		return this;
+	}
+	
+	public String[] normaliseRow(String[] row){
+		String[] newRow = Arrays.copyOf(row, row.length);
+		for(int i = 0; i < newRow.length; ++i){
+			row[i] = String.valueOf((Double.parseDouble(row[i]) - lowestValues[i])/(highestValues[i] - lowestValues[i]));
+		}
+		return newRow;
 	}
 	
 	public CSVNormaliser normalize(){
