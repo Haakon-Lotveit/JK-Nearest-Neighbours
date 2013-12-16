@@ -1,0 +1,57 @@
+package test.no.uib.info381.convenience;
+
+import static org.junit.Assert.*;
+
+import java.io.File;
+
+import no.uib.info381.knn.convenience.CSVNormaliser;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+public class TestCSVNormaliser {
+	CSVNormaliser norm = null;
+	
+	@Before
+	public void setUp() throws Exception {
+		norm = new CSVNormaliser(new File("testdata/csv/missingdata.csv"), 1);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		norm = null;
+	}
+
+	@Test
+	public void testFillBlanks() {
+		norm.fillBlanks();
+		String expected = 
+				"19,Eple,\n" +
+				"21,Appelsin,\n" +
+				"20.0,Eple,\n" +
+				"20,Eple,\n" +
+				"20,Appelsin,\n";
+		String actual = norm.toString();
+		assertEquals(String.format("Expected:%n%s%nActual%n%s%n", expected, actual), expected, actual);
+	}
+
+	@Test
+	public void testNormalize() {
+		String expected = 
+				0.0,Eple,
+				1.0,Appelsin,
+				0.5,Eple,
+				0.5,Eple,
+				0.5,Appelsin,
+
+		String actual = norm.toString();
+		AssertEquals(String.format("Expected:%n%s%nActual%n%s%n", expected, actual), expected, actual);
+	}
+
+	@Test
+	public void testToString() {
+		fail("Not yet implemented");
+	}
+
+}
