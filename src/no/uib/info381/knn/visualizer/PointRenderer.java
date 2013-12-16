@@ -41,6 +41,14 @@ public class PointRenderer extends Renderer{
 	private boolean m_FitY;
 	
 	/***
+	 * This is used for storing max/min values of all the points
+	 */
+	private double m_MaxX;
+	private double m_MaxY;
+	private double m_MinX;
+	private double m_MinY;
+	
+	/***
 	 * axis labels used to give names to axis
 	 */
 	private TreeMap<Double,String> m_XLabels;
@@ -70,7 +78,31 @@ public class PointRenderer extends Renderer{
 		this.m_XLabels = new TreeMap<Double,String>();
 		this.m_YLabels = new TreeMap<Double,String>();
 		this.m_DrawAxis = true;
+		
+		this.m_MaxX = 0;
+		this.m_MaxY = 0;
+		this.m_MinX = 0;
+		this.m_MinY = 0;
 	}
+
+	/***
+	 * return a clone (shallow copy) of the datapoints set
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public TreeMap<String, DataPoints> getPointsSet()
+	{
+		return (TreeMap<String, DataPoints>)this.m_PointsSet.clone();
+	}
+	
+	/***
+	 * get methods for max/min values of datapoints
+	 * @return
+	 */
+	public double getMaxX() {return this.m_MaxX;}
+	public double getMaxY() {return this.m_MaxY;}
+	public double getMinX() {return this.m_MinX;}
+	public double getMinY() {return this.m_MinY;}
 	
 	/***
 	 * draw axis or not
@@ -133,6 +165,43 @@ public class PointRenderer extends Renderer{
 			for (DataPoint p: dp)
 				this.m_PointsSet.get(group).addPoint(p.getX(), p.getY());
 		}
+		
+		// calculate min max values
+		calculateMinMax();
+	}
+	
+	private void calculateMinMax()
+	{
+		double maxX = 0, maxY = 0, minX = 0, minY = 0;
+        boolean initMinMax = true;
+        for (Entry<String, DataPoints> e: this.m_PointsSet.entrySet())
+        {
+        	DataPoints dp = e.getValue();
+        	if (initMinMax)
+        	{
+        		maxX = dp.getMaxX();
+        		maxY = dp.getMaxY();
+        		minX = dp.getMinX();
+        		minY = dp.getMinY();
+        		initMinMax = false;
+        	} else
+        	{
+	        	if (dp.getMaxX()>maxX) maxX = dp.getMaxX();
+	        	if (dp.getMaxY()>maxY) maxY = dp.getMaxY();
+	        	if (dp.getMinX()<minX) minX = dp.getMinX();
+	        	if (dp.getMinY()<minY) minY = dp.getMinY();
+        	}
+        }
+        
+        // scale ratio to fit the points inside render area
+        if (!this.m_FitX) minX = 0;
+        if (!this.m_FitY) minY = 0;
+        
+        // store it for this renderer
+        this.m_MaxX = maxX;
+        this.m_MaxY = maxY;
+        this.m_MinX = minX;
+        this.m_MinY = minY;
 	}
 	
 	/***
@@ -189,6 +258,17 @@ public class PointRenderer extends Renderer{
 	{
 		group = group.toLowerCase();
 		this.m_PointsSetColor.put(group, c);
+	}
+	
+	/***
+	 * get group color for a group name
+	 * @param group
+	 * @return
+	 */
+	public Color getGroupColor(String group)
+	{
+		group = group.toLowerCase();
+		return this.m_PointsSetColor.get(group);
 	}
 	
 	/***
@@ -270,30 +350,12 @@ public class PointRenderer extends Renderer{
          * point rendering calculations
          */
         // finds the maximum & minimum rendering coordinates to fit points properly
-        double maxX = 0, maxY = 0, minX = 0, minY = 0;
-        boolean initMinMax = true;
-        for (Entry<String, DataPoints> e: this.m_PointsSet.entrySet())
-        {
-        	DataPoints dp = e.getValue();
-        	if (initMinMax)
-        	{
-        		maxX = dp.getMaxX();
-        		maxY = dp.getMaxY();
-        		minX = dp.getMinX();
-        		minY = dp.getMinY();
-        		initMinMax = false;
-        	} else
-        	{
-	        	if (dp.getMaxX()>maxX) maxX = dp.getMaxX();
-	        	if (dp.getMaxY()>maxY) maxY = dp.getMaxY();
-	        	if (dp.getMinX()<minX) minX = dp.getMinX();
-	        	if (dp.getMinY()<minY) minY = dp.getMinY();
-        	}
-        }
         
-        // scale ratio to fit the points inside render area
-        if (!this.m_FitX) minX = 0;
-        if (!this.m_FitY) minY = 0;
+        double  maxX = this.m_MaxX, 
+        		maxY = this.m_MaxY, 
+        		minX = this.m_MinX, 
+        		minY = this.m_MinY;
+
         double wScale = (double)w/(maxX-minX);
         double hScale = (double)h/(maxY-minY);
 

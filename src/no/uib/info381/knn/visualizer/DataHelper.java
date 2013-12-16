@@ -1,9 +1,13 @@
 package no.uib.info381.knn.visualizer;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import no.uib.info381.knn.convenience.Table;
+import no.uib.info381.knn.dataloaders.CSVData;
 
 /***
  * Datahelper class contains methods to aid data stuffs
@@ -12,6 +16,25 @@ import no.uib.info381.knn.convenience.Table;
  */
 public final class DataHelper {
 	
+	/***
+	 * Create a list a CSVData by using point data from a point renderer
+	 * @param renderer
+	 * @return
+	 */
+	public static List<CSVData> getCSVDataFromPointRenderer(PointRenderer renderer)
+	{
+		TreeMap<String,DataPoints> pointsSet = renderer.getPointsSet();
+		List<CSVData> dataobjects = new LinkedList<CSVData>();
+		for (Entry<String,DataPoints> e: pointsSet.entrySet())
+		{
+			for (DataPoint p: e.getValue())
+			{
+				CSVData data = new CSVData(new String[]{""+p.getX(),""+p.getY(),e.getKey()}, 2);
+				dataobjects.add(data);
+			}
+		}
+		return dataobjects;
+	}
 	/***
 	 * Shortcutmethod using attribute names
 	 * @param data

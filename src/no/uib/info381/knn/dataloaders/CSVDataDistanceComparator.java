@@ -19,8 +19,10 @@ public class CSVDataDistanceComparator implements Comparator<CSVData> {
 	@Override
 	public int compare(CSVData o1, CSVData o2) {
 		double a = comparisonBase.distanceTo(o1, allowableIndexes);
-		double b = comparisonBase.distanceTo(o2, allowableIndexes);		
-		return (int) Math.round(a - b);
+		double b = comparisonBase.distanceTo(o2, allowableIndexes);
+		if (a>b) return 1;
+		if (a==b) return 0;
+		return -1;
 	}
 
 }
