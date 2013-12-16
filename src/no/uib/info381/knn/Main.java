@@ -27,15 +27,9 @@ public class Main {
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		CommandLine userInterface = new CommandLine();
 //		userInterface.runScript(new File("testdata/script/simplestscript"));
-		userInterface.start(); 
+		//userInterface.start(); 
 		
-		
-//khoa test:
-		/*
-		Scanner kb = new Scanner(System.in);
-		Table dataset = TableHelper.ReadTableFromCSV(kb.nextLine().trim());
-		dataset.print(13,300);*/
-		// HELE DENNE GREIEN ER BARE TESTING FRA TIDLIGERE. DET SKAL OVER I JUNIT.
+		VisualizerTest.test();
 
 	}
 

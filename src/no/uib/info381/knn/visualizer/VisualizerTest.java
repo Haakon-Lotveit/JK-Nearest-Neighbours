@@ -29,15 +29,15 @@ public final class VisualizerTest {
 		pointRenderer.setRightMargin(30);
 		pointRenderer.setLeftMargin(50);
 		pointRenderer.setBottomMargin(30);
-		pointRenderer.setFitX(false);
-		pointRenderer.setFitY(false);
+		//pointRenderer.setFitX(false);
+		//pointRenderer.setFitY(false);
 		
 		/***
 		 * create knn renderer
 		 */
 		KNNRenderer knnrenderer = new KNNRenderer(pointRenderer);
 		knnrenderer.setGridSize(4);
-		knnrenderer.setK(1);
+		knnrenderer.setK(15);
 
 		/***
 		 * add renderers to visualizer
@@ -56,7 +56,7 @@ public final class VisualizerTest {
 		for (Entry<String,ArrayList<Integer>> dataclass: classifications.entrySet()) {
 			ArrayList<Integer> subset = dataclass.getValue();
 			String subsetName = dataclass.getKey();
-			DataPoints dp = DataHelper.dataPointsFromTableAttributes(dataset, "LÄNGD", "VIKT", DataType.DATATYPE_CONTINUOUS, DataType.DATATYPE_CONTINUOUS, subset);
+			DataPoints dp = DataHelper.dataPointsFromTableAttributes(dataset, "ÅLDER", "LÄNGD", DataType.DATATYPE_CONTINUOUS, DataType.DATATYPE_CONTINUOUS, subset);
 			pointRenderer.addDataPoints(subsetName, dp);
 			pointRenderer.setGroupColor(subsetName, Color.getHSBColor(i*colorDistribution, 1.0f, 1.0f));
 	
@@ -67,32 +67,37 @@ public final class VisualizerTest {
 		}
 		
 		
-		/*
 		 // fixed point test
-		pointRenderer.addDataPoint("a", new DataPoint(10,10));
-		pointRenderer.setGroupColor("a", Color.red);
-		
-		pointRenderer.addDataPoint("a", new DataPoint(5,2));
-		pointRenderer.setGroupColor("a", Color.red);
-		
-		pointRenderer.addDataPoint("b", new DataPoint(4,0));
-		pointRenderer.setGroupColor("b", Color.blue);
-		
-		pointRenderer.addDataPoint("b", new DataPoint(2,6));
-		pointRenderer.setGroupColor("b", Color.blue);
-		
-		pointRenderer.addDataPoint("c", new DataPoint(8,2));
-		pointRenderer.setGroupColor("c", Color.yellow);*/
-		
 		/*
+		pointRenderer.addDataPoint("1", new DataPoint(10,10));
+		pointRenderer.addDataPoint("2", new DataPoint(5,2));
+		pointRenderer.addDataPoint("3", new DataPoint(4,0));
+		pointRenderer.addDataPoint("1", new DataPoint(2,6));
+		pointRenderer.addDataPoint("1", new DataPoint(8,2));
+		pointRenderer.addDataPoint("1", new DataPoint(1,12));
+		pointRenderer.addDataPoint("5", new DataPoint(2,8));
+		pointRenderer.addDataPoint("8", new DataPoint(5,1));
+		pointRenderer.addDataPoint("9", new DataPoint(7,0));
+		pointRenderer.addDataPoint("10", new DataPoint(2,1));
+		pointRenderer.addDataPoint("11", new DataPoint(3,9));
+		pointRenderer.addDataPoint("12", new DataPoint(7,4));
+		pointRenderer.addDataPoint("13", new DataPoint(9,6));
+		pointRenderer.addDataPoint("14", new DataPoint(11,9));
+		for (int i=1;i<=14;i++)
+		{
+			pointRenderer.setGroupColor(""+i, Color.getHSBColor(i*(1.0f/14), 1.0f, 1.0f));
+		}*/
+		
+		
 		 // random point test
+		/*
 		Random rgn = new Random();
-		for (int i=0; i<30; i++)
+		for (int i=0; i<5; i++)
 		{
 			pointRenderer.addDataPoint("a", new DataPoint(rgn.nextDouble(),rgn.nextDouble()));
 		}
 		pointRenderer.setGroupColor("a", Color.green);
-		for (int i=0; i<30; i++)
+		for (int i=0; i<5; i++)
 		{
 			pointRenderer.addDataPoint("b", new DataPoint(rgn.nextDouble(),rgn.nextDouble()));
 		}
